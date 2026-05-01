@@ -1,0 +1,126 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile data including preferences and role.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["customer", "admin"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email", "role", "createdAt"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Royal Tomato Pickle brand product details.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "image": { "type": "string" },
+        "category": { "type": "string" },
+        "stock": { "type": "integer" }
+      },
+      "required": ["name", "description", "price", "image", "category", "stock"]
+    },
+    "Order": {
+      "title": "Order",
+      "type": "object",
+      "properties": {
+        "orderId": { "type": "string" },
+        "userId": { "type": "string" },
+        "userEmail": { "type": "string", "format": "email" },
+        "items": { "type": "array", "items": { "type": "object" } },
+        "total": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "processing", "shipped", "delivered", "cancelled"] },
+        "paymentMethod": { "type": "string" },
+        "smsNotification": { "type": "boolean" },
+        "customerPhone": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["orderId", "userId", "userEmail", "items", "total", "status", "paymentMethod", "smsNotification", "createdAt"]
+    },
+    "Setting": {
+      "title": "System Setting",
+      "type": "object",
+      "properties": {
+        "smsEnabled": { "type": "boolean" },
+        "bankAccountInfo": { "type": "string" },
+        "referralBonus": { "type": "number" }
+      },
+      "required": ["smsEnabled", "bankAccountInfo", "referralBonus"]
+    },
+    "SMSLog": {
+      "title": "SMS Log",
+      "type": "object",
+      "properties": {
+        "orderId": { "type": "string" },
+        "userId": { "type": "string" },
+        "phoneNumber": { "type": "string" },
+        "message": { "type": "string" },
+        "status": { "type": "string" },
+        "retryCount": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["orderId", "userId", "phoneNumber", "message", "status", "retryCount", "createdAt"]
+    },
+    "AuditLog": {
+      "title": "Audit Log",
+      "type": "object",
+      "properties": {
+        "adminId": { "type": "string" },
+        "adminEmail": { "type": "string" },
+        "action": { "type": "string" },
+        "details": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["adminId", "adminEmail", "action", "timestamp"]
+    },
+    "Message": {
+      "title": "Concierge Message",
+      "description": "Inquiries from customers to the royal concierge.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "message": { "type": "string" },
+        "status": { "type": "string", "enum": ["unread", "read", "replied"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "email", "message", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "users": {
+        "schema": "User",
+        "description": "Collection of user profiles"
+    },
+    "products": {
+        "schema": "Product",
+        "description": "Collection of available products"
+    },
+    "orders": {
+        "schema": "Order",
+        "description": "Customer orders"
+    },
+    "settings": {
+        "schema": "Setting",
+        "description": "System wide settings"
+    },
+    "sms_logs": {
+        "schema": "SMSLog",
+        "description": "Record of sent SMS notifications"
+    },
+    "audit_logs": {
+        "schema": "AuditLog",
+        "description": "Record of admin actions"
+    },
+    "messages": {
+        "schema": "Message",
+        "description": "Customer inquiries and concierge messages"
+    }
+  }
+}
